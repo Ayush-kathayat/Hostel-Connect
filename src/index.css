@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -46,7 +45,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --ring: 224.3 76.5% 48%;
   }
 }
 
@@ -59,59 +58,28 @@
   }
 }
 
-/* HostelConnect Custom Styles */
-:root {
-  --hostel-blue: #1976d2;
-  --hostel-light-blue: #42a5f5;
-  --hostel-orange: #ff9800;
-  --hostel-light-orange: #ffb74d;
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delay {
+    animation: float 8s ease-in-out 1s infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 10s ease-in-out 2s infinite;
+  }
 }
 
-.bg-hostel-blue {
-  background-color: var(--hostel-blue);
-}
-
-.bg-hostel-lightBlue {
-  background-color: var(--hostel-light-blue);
-}
-
-.bg-hostel-orange {
-  background-color: var(--hostel-orange);
-}
-
-.bg-hostel-lightOrange {
-  background-color: var(--hostel-light-orange);
-}
-
-.text-hostel-blue {
-  color: var(--hostel-blue);
-}
-
-.text-hostel-orange {
-  color: var(--hostel-orange);
-}
-
-.border-hostel-blue {
-  border-color: var(--hostel-blue);
-}
-
-/* Hero section background */
-.hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url('https://images.unsplash.com/photo-1596436889106-be35e843f974?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aG9zdGVsfGVufDB8fDB8fHww&auto=format&fit=crop&w=1500&q=80');
-  background-size: cover;
-  background-position: center;
-  min-height: 500px;
-  display: flex;
-  align-items: center;
-}
-
-/* Hostel card hover effect */
-.hostel-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hostel-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
 }

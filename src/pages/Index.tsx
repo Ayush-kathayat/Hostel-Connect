@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "@/contexts/AuthContext";
 import {
   MapPin,
   School,
@@ -15,18 +17,53 @@ import GoogleMap from "@/components/GoogleMap";
 
 // City data with coordinates
 const cities = [
-  { city: "Mumbai", img: "/City photos/Mumbai.jpeg", lat: 19.0825, lng: 72.7141 },
+  {
+    city: "Mumbai",
+    img: "/City photos/Mumbai.jpeg",
+    lat: 19.0825,
+    lng: 72.7141,
+  },
   { city: "Delhi", img: "/City photos/Delhi.webp", lat: 28.6443, lng: 76.7636 },
-  { city: "Bangalore", img: "/City photos/Banglore.webp", lat: 12.9716, lng: 77.5946 },
-  { city: "Chennai", img: "/City photos/Chennai.jpeg", lat: 13.0827, lng: 80.2707 },
-  { city: "Hyderabad", img: "/City photos/hydrebad.jpeg", lat: 17.3850, lng: 78.4867 },
-  { city: "Kolkata", img: "/City photos/Kolkata.png", lat: 22.5726, lng: 88.3639 },
+  {
+    city: "Bangalore",
+    img: "/City photos/Banglore.webp",
+    lat: 12.9716,
+    lng: 77.5946,
+  },
+  {
+    city: "Chennai",
+    img: "/City photos/Chennai.jpeg",
+    lat: 13.0827,
+    lng: 80.2707,
+  },
+  {
+    city: "Hyderabad",
+    img: "/City photos/hydrebad.jpeg",
+    lat: 17.385,
+    lng: 78.4867,
+  },
+  {
+    city: "Kolkata",
+    img: "/City photos/Kolkata.png",
+    lat: 22.5726,
+    lng: 88.3639,
+  },
   { city: "Pune", img: "/City photos/Pune'.jpeg", lat: 18.5204, lng: 73.8567 },
-  { city: "Ahmedabad", img: "/City photos/ahmedabad.webp", lat: 23.0225, lng: 72.5714 },
+  {
+    city: "Ahmedabad",
+    img: "/City photos/ahmedabad.webp",
+    lat: 23.0225,
+    lng: 72.5714,
+  },
 ];
 
 const Index = () => {
-  const [selectedCity, setSelectedCity] = useState<{ lat: number; lng: number } | null>(null);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuthContext();
+  const [selectedCity, setSelectedCity] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
 
   const handleCityClick = (lat: number, lng: number) => {
     setSelectedCity({ lat, lng });
@@ -49,6 +86,13 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-5">
             <Button
               size="lg"
+              onClick={() => {
+                if (isAuthenticated) {
+                  navigate("/Home");
+                } else {
+                  navigate("/auth");
+                }
+              }}
               className="bg-white text-hostel-blue hover:bg-gray-100 font-semibold px-8 py-6 rounded-lg shadow-md transition-all hover:shadow-xl"
             >
               <Search className="mr-3 h-5 w-5" /> Find Hostels
