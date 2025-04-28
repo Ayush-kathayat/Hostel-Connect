@@ -1,8 +1,14 @@
 // HomePage.tsx
+import { universities } from "/home/rohit/Documents/codes/Hostel-Connect/src/data/universities.ts"; // Adjust path if needed
+import { ArrowRight } from "lucide-react";
+import Footer from "@/components/Footer";
 import React, { useState, useEffect } from "react";
 import { UserRole, City, Hostel, UserProfile } from "./types";
 import { Building, MapPin, IndianRupee, Camera } from "lucide-react";
 import Navbar from "@/components/Navbar";
+
+
+
 
 // Mock data
 const POPULAR_CITIES: City[] = [
@@ -16,56 +22,6 @@ const POPULAR_CITIES: City[] = [
   { id: 8, name: "Ahmedabad", imageUrl: "/public/City photos/ahmedabad.webp" },
 ];
 
-const UNIVERSITIES = [
-  {
-    id: 1,
-    name: "Delhi University",
-    city: "Delhi",
-    imageUrl: "/api/placeholder/300/200",
-  },
-  {
-    id: 2,
-    name: "Mumbai University",
-    city: "Mumbai",
-    imageUrl: "/api/placeholder/300/200",
-  },
-  {
-    id: 3,
-    name: "IIT Bombay",
-    city: "Mumbai",
-    imageUrl: "/api/placeholder/300/200",
-  },
-  {
-    id: 4,
-    name: "IIT Delhi",
-    city: "Delhi",
-    imageUrl: "/api/placeholder/300/200",
-  },
-  {
-    id: 5,
-    name: "University of Hyderabad",
-    city: "Hyderabad",
-    imageUrl: "/api/placeholder/300/200",
-  },
-  {
-    id: 6,
-    name: "Anna University",
-    city: "Chennai",
-    imageUrl: "/api/placeholder/300/200",
-  },
-  {
-    id: 7,
-    name: "Jadavpur University",
-    city: "Kolkata",
-    imageUrl: "/api/placeholder/300/200",
-  },
-  {
-    id: 8,
-    name: "Pune University",
-    city: "Pune",
-    imageUrl: "/api/placeholder/300/200",
-  },
-];
 
 const MOCK_HOSTELS: Hostel[] = [
   // Mumbai
@@ -203,6 +159,9 @@ const MOCK_USER: UserProfile = {
   ],
 };
 
+
+
+
 const StudentHome: React.FC = () => {
   const [selectedCity, setSelectedCity] = useState<number | null>(null);
   const [selectedUniversity, setSelectedUniversity] = useState<number | null>(
@@ -306,7 +265,23 @@ const StudentHome: React.FC = () => {
                 <h3 className="text-xl font-semibold mb-4 text-blue-700">
                   Search by Universities
                 </h3>
-                {/* Removed the university listing grid as requested */}
+                {/* Show university list only if no city or university is selected */}
+                {!selectedCity && !selectedUniversity ? (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {universities.map((university) => (
+                      <div
+                        key={university.id}
+                        className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+                        onClick={() => handleUniversitySelect(university.id)}
+                      >
+                        <div className="p-4">
+                          <h3 className="font-bold text-lg">{university.name}</h3>
+                          <p className="text-gray-600 text-sm mt-1">{university.city}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -318,16 +293,14 @@ const StudentHome: React.FC = () => {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">
               {activeTab === "cities" && selectedCity
-                ? `Hostels in ${
-                    POPULAR_CITIES.find((city) => city.id === selectedCity)
-                      ?.name
-                  }`
+                ? `Hostels in ${POPULAR_CITIES.find((city) => city.id === selectedCity)
+                  ?.name
+                }`
                 : activeTab === "universities" && selectedUniversity
-                ? `Hostels near ${
-                    UNIVERSITIES.find((uni) => uni.id === selectedUniversity)
-                      ?.name
+                  ? `Hostels near ${UNIVERSITIES.find((uni) => uni.id === selectedUniversity)
+                    ?.name
                   }`
-                : "Matching Hostels"}{" "}
+                  : "Matching Hostels"}{" "}
               {/* Fallback text */}
             </h2>
             <button
@@ -405,21 +378,19 @@ const OwnerHome: React.FC<{ hostels: Hostel[] }> = ({ hostels }) => {
         </p>
         <div className="flex gap-3">
           <button
-            className={`py-2 px-6 rounded ${
-              activeTab === "dashboard"
+            className={`py-2 px-6 rounded ${activeTab === "dashboard"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
-            }`}
+              }`}
             onClick={() => setActiveTab("dashboard")}
           >
             Dashboard
           </button>
           <button
-            className={`py-2 px-6 rounded ${
-              activeTab === "addNew"
+            className={`py-2 px-6 rounded ${activeTab === "addNew"
                 ? "bg-green-500 text-white"
                 : "bg-gray-200 text-gray-700"
-            }`}
+              }`}
             onClick={() => setActiveTab("addNew")}
           >
             + Add New Hostel
@@ -464,11 +435,10 @@ const OwnerHome: React.FC<{ hostels: Hostel[] }> = ({ hostels }) => {
                       <div className="flex justify-between mb-2">
                         <h4 className="text-lg font-bold">{hostel.name}</h4>
                         <span
-                          className={`px-3 py-1 rounded-full text-sm ${
-                            hostel.status === "Active"
+                          className={`px-3 py-1 rounded-full text-sm ${hostel.status === "Active"
                               ? "bg-green-100 text-green-800"
                               : "bg-yellow-100 text-yellow-800"
-                          }`}
+                            }`}
                         >
                           {hostel.status || "Pending"}
                         </span>
@@ -623,89 +593,15 @@ const HomePage: React.FC = () => {
       <Navbar />
       <main>
         {currentUser.role === UserRole.STUDENT ||
-        currentUser.userType === "student" ? (
+          currentUser.userType === "student" ? (
           <StudentHome />
         ) : (
           <OwnerHome hostels={currentUser.hostels} />
         )}
       </main>
-      <footer className="bg-gray-800 text-white p-6 mt-10">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between">
-            <div className="mb-6 md:mb-0">
-              <h3 className="text-xl font-bold mb-2">HostelFinder</h3>
-              <p className="text-gray-400">
-                Finding the perfect accommodation for students
-              </p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-              <div>
-                <h4 className="font-bold mb-2">Quick Links</h4>
-                <ul className="space-y-1">
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      Home
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      About Us
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      Contact
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">Resources</h4>
-                <ul className="space-y-1">
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      FAQ
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      Blog
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      Privacy Policy
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">Connect</h4>
-                <ul className="space-y-1">
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      Facebook
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      Twitter
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white">
-                      Instagram
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 pt-4 border-t border-gray-700 text-center text-gray-400">
-            <p>© 2025 HostelFinder. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 };
