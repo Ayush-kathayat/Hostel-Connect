@@ -68,47 +68,105 @@ const UNIVERSITIES = [
 ];
 
 const MOCK_HOSTELS: Hostel[] = [
-  {
-    id: 1,
-    name: "Sunshine Hostel",
-    cityId: 1,
-    address: "123 Main Street, Mumbai",
-    price: 8000,
-    amenities: ["WiFi", "AC", "Laundry"],
-    rating: 4.2,
-    imageUrl: "/api/placeholder/400/300",
-  },
-  {
-    id: 2,
-    name: "Green Meadows PG",
-    cityId: 1,
-    address: "45 Park Avenue, Mumbai",
-    price: 7500,
-    amenities: ["WiFi", "Food", "Security"],
-    rating: 3.8,
-    imageUrl: "/api/placeholder/400/300",
-  },
-  {
-    id: 3,
-    name: "Delhi Student Hub",
-    cityId: 2,
-    address: "78 University Road, Delhi",
-    price: 9000,
-    amenities: ["WiFi", "AC", "Food", "Gym"],
-    rating: 4.5,
-    imageUrl: "/api/placeholder/400/300",
-  },
-  {
-    id: 4,
-    name: "College Court PG",
-    cityId: 2,
-    address: "25 College Street, Delhi",
-    price: 7800,
-    amenities: ["WiFi", "Security", "Study Room"],
-    rating: 4.0,
-    imageUrl: "/api/placeholder/400/300",
-  },
-];
+  // Mumbai
+  { id: 1, name: "Marine Drive Hostel", cityId: 1, address: "123 Marine Drive, Mumbai", price: 8500, amenities: ["WiFi", "AC", "Laundry"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 2, name: "Gateway Stay", cityId: 1, address: "456 Colaba Causeway, Mumbai", price: 9000, amenities: ["WiFi", "AC", "CCTV"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1600585154203-d4314c5b25a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 3, name: "Suburban Lodge", cityId: 1, address: "789 Andheri East, Mumbai", price: 7500, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1527030280862-64139fba04ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 4, name: "Versova Nest", cityId: 1, address: "101 Versova, Mumbai", price: 7800, amenities: ["WiFi", "AC", "Social Area"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1597007510989-896dbb5c9c33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 5, name: "Juhu Beach Hostel", cityId: 1, address: "202 Juhu Tara Road, Mumbai", price: 8200, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1600585154784-0c1f444bb7b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 6, name: "Bandra Buzz", cityId: 1, address: "303 Bandra West, Mumbai", price: 9500, amenities: ["WiFi", "AC", "Private Rooms"], rating: 4.6, imageUrl: "https://images.unsplash.com/photo-1613470905607-dc319dc778fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 7, name: "Borivali Comforts", cityId: 1, address: "404 Borivali West, Mumbai", price: 7300, amenities: ["WiFi", "Laundry", "Breakfast"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1613929728574-50e1ed046b26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 8, name: "Kurla Co-Living", cityId: 1, address: "505 Kurla, Mumbai", price: 7200, amenities: ["WiFi", "AC", "CCTV"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1600585154197-08830d4c4dc4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 9, name: "Powai Stay", cityId: 1, address: "606 Hiranandani Gardens, Mumbai", price: 8700, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1613929727991-6a9efdd3c770?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 10, name: "South Bombay Suites", cityId: 1, address: "707 Churchgate, Mumbai", price: 9800, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.7, imageUrl: "https://images.unsplash.com/photo-1613470905810-5905dbad98a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+
+  // Delhi
+  { id: 11, name: "Heritage Hostel", cityId: 2, address: "123 Connaught Place, Delhi", price: 7500, amenities: ["WiFi", "Laundry", "AC"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 12, name: "Dilli Darbar Stay", cityId: 2, address: "234 Karol Bagh, Delhi", price: 7700, amenities: ["WiFi", "Breakfast", "Social Area"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1549921296-3a6b4e36de99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 13, name: "Red Fort Inn", cityId: 2, address: "345 Chandni Chowk, Delhi", price: 8200, amenities: ["WiFi", "AC", "Laundry"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1558981359-65345bdb2395?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 14, name: "Lotus Living", cityId: 2, address: "456 Lajpat Nagar, Delhi", price: 7800, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 15, name: "Capital Comfort", cityId: 2, address: "567 Hauz Khas, Delhi", price: 8300, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1573164574395-d0553b9d7d31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 16, name: "Safdarjung Stay", cityId: 2, address: "678 Safdarjung Enclave, Delhi", price: 7900, amenities: ["WiFi", "Laundry", "CCTV"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1560347876-aeef00ee58a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 17, name: "Janpath Junction", cityId: 2, address: "789 Janpath Road, Delhi", price: 8100, amenities: ["WiFi", "AC", "Laundry"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1590402494683-2a63c3156a27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 18, name: "Urban Nomad", cityId: 2, address: "890 New Friends Colony, Delhi", price: 7400, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1549921295-3a69d4d26326?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 19, name: "Delhi Dreamers Hostel", cityId: 2, address: "901 Saket, Delhi", price: 7600, amenities: ["WiFi", "AC", "Private Rooms"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1610402072877-9895f3e711d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  { id: 20, name: "Metro Inn", cityId: 2, address: "1010 Dwarka, Delhi", price: 7200, amenities: ["WiFi", "Laundry", "CCTV"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1614382047534-58e32e41ff63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" },
+  
+      { id: 21, name: "Silicon Valley Hostel", cityId: 3, address: "123 MG Road, Bangalore", price: 8700, amenities: ["WiFi", "AC", "Laundry"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1590490360182-c53aabb1e687?auto=format&fit=crop&w=800&q=60" },
+      { id: 22, name: "Garden City Stay", cityId: 3, address: "234 Brigade Road, Bangalore", price: 8900, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1556745757-8d76bdb6984b?auto=format&fit=crop&w=800&q=60" },
+      { id: 23, name: "Koramangala Comforts", cityId: 3, address: "345 Koramangala, Bangalore", price: 8000, amenities: ["WiFi", "AC", "CCTV"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1502673530728-f79b4cab31b1?auto=format&fit=crop&w=800&q=60" },
+      { id: 24, name: "Indiranagar Inn", cityId: 3, address: "456 Indiranagar, Bangalore", price: 8300, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=60" },
+      { id: 25, name: "Cubbon Comfort", cityId: 3, address: "567 Cubbon Park Area, Bangalore", price: 8600, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=60" },
+      { id: 26, name: "Whitefield Stay", cityId: 3, address: "678 Whitefield, Bangalore", price: 8100, amenities: ["WiFi", "Laundry", "Social Area"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=800&q=60" },
+      { id: 27, name: "Electronic City Living", cityId: 3, address: "789 Electronic City, Bangalore", price: 7900, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1618221229348-0e94f10d8e21?auto=format&fit=crop&w=800&q=60" },
+      { id: 28, name: "BTM Residency", cityId: 3, address: "890 BTM Layout, Bangalore", price: 8500, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1559696782-1452159cf23b?auto=format&fit=crop&w=800&q=60" },
+      { id: 29, name: "Bannerghatta Suites", cityId: 3, address: "901 Bannerghatta Road, Bangalore", price: 8200, amenities: ["WiFi", "AC", "CCTV"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1576671081837-564dd7b46c37?auto=format&fit=crop&w=800&q=60" },
+      { id: 30, name: "Hebbal Heights", cityId: 3, address: "1010 Hebbal, Bangalore", price: 8800, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1600585154501-59dc5dfc2824?auto=format&fit=crop&w=800&q=60" },
+
+        { id: 31, name: "Charminar Hostel", cityId: 4, address: "123 Charminar Road, Hyderabad", price: 7800, amenities: ["WiFi", "AC", "Laundry"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=800&q=60" },
+        { id: 32, name: "Hitech City Inn", cityId: 4, address: "234 Hitech City, Hyderabad", price: 8100, amenities: ["WiFi", "Breakfast", "CCTV"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1551907234-40fac2f76025?auto=format&fit=crop&w=800&q=60" },
+        { id: 33, name: "Banjara Hills Residency", cityId: 4, address: "345 Banjara Hills, Hyderabad", price: 8500, amenities: ["WiFi", "AC", "Laundry"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=60" },
+        { id: 34, name: "Gachibowli Stay", cityId: 4, address: "456 Gachibowli, Hyderabad", price: 7900, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=60" },
+        { id: 35, name: "Begumpet Suites", cityId: 4, address: "567 Begumpet, Hyderabad", price: 8000, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=60" },
+        { id: 36, name: "Secunderabad Comforts", cityId: 4, address: "678 Secunderabad, Hyderabad", price: 7600, amenities: ["WiFi", "CCTV", "Laundry"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1557164684-39a9335095d4?auto=format&fit=crop&w=800&q=60" },
+        { id: 37, name: "Old City Hostel", cityId: 4, address: "789 Old City, Hyderabad", price: 7300, amenities: ["WiFi", "Breakfast", "Social Area"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1618005198919-2f3840a3d0de?auto=format&fit=crop&w=800&q=60" },
+        { id: 38, name: "Madhapur Residency", cityId: 4, address: "890 Madhapur, Hyderabad", price: 8200, amenities: ["WiFi", "AC", "Laundry"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1578687336046-75c3f68e6782?auto=format&fit=crop&w=800&q=60" },
+        { id: 39, name: "Kondapur Inn", cityId: 4, address: "901 Kondapur, Hyderabad", price: 7700, amenities: ["WiFi", "Laundry", "Breakfast"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1600585154240-336d6ec2b59b?auto=format&fit=crop&w=800&q=60" },
+        { id: 40, name: "Jubilee Hills Stay", cityId: 4, address: "1010 Jubilee Hills, Hyderabad", price: 8500, amenities: ["WiFi", "AC", "Private Rooms"], rating: 4.6, imageUrl: "https://images.unsplash.com/photo-1578898887943-3e9ad5a13d5d?auto=format&fit=crop&w=800&q=60" },
+
+          { id: 41, name: "Marina Beach Hostel", cityId: 5, address: "123 Marina Beach Road, Chennai", price: 7900, amenities: ["WiFi", "AC", "Laundry"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=60" },
+          { id: 42, name: "T Nagar Stay", cityId: 5, address: "234 T Nagar, Chennai", price: 8100, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1618221229348-0e94f10d8e21?auto=format&fit=crop&w=800&q=60" },
+          { id: 43, name: "Guindy Residency", cityId: 5, address: "345 Guindy, Chennai", price: 7700, amenities: ["WiFi", "AC", "CCTV"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1556742041-8121b99b3814?auto=format&fit=crop&w=800&q=60" },
+          { id: 44, name: "Egmore Hostel", cityId: 5, address: "456 Egmore, Chennai", price: 8000, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1600585154501-59dc5dfc2824?auto=format&fit=crop&w=800&q=60" },
+          { id: 45, name: "Adyar Suites", cityId: 5, address: "567 Adyar, Chennai", price: 8400, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1578898887943-3e9ad5a13d5d?auto=format&fit=crop&w=800&q=60" },
+          { id: 46, name: "Velachery Comforts", cityId: 5, address: "678 Velachery, Chennai", price: 7600, amenities: ["WiFi", "CCTV", "Laundry"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=60" },
+          { id: 47, name: "Besant Nagar Stay", cityId: 5, address: "789 Besant Nagar, Chennai", price: 8300, amenities: ["WiFi", "Breakfast", "Social Area"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1556741533-f6acd647aa95?auto=format&fit=crop&w=800&q=60" },
+          { id: 48, name: "Mylapore Inn", cityId: 5, address: "890 Mylapore, Chennai", price: 8000, amenities: ["WiFi", "AC", "Laundry"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1553456558-aff63285bddb?auto=format&fit=crop&w=800&q=60" },
+          { id: 49, name: "Kilpauk Hostel", cityId: 5, address: "901 Kilpauk, Chennai", price: 7700, amenities: ["WiFi", "Laundry", "Breakfast"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1576671081837-564dd7b46c37?auto=format&fit=crop&w=800&q=60" },
+          { id: 50, name: "Alwarpet Residency", cityId: 5, address: "1010 Alwarpet, Chennai", price: 8500, amenities: ["WiFi", "AC", "Private Rooms"], rating: 4.6, imageUrl: "https://images.unsplash.com/photo-1618221229573-0c5c99f17f3b?auto=format&fit=crop&w=800&q=60" },
+
+            { id: 51, name: "Park Street Hostel", cityId: 6, address: "123 Park Street, Kolkata", price: 7200, amenities: ["WiFi", "AC", "Laundry"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1590490360182-c7506f013b1f?auto=format&fit=crop&w=800&q=60" },
+            { id: 52, name: "Howrah Comforts", cityId: 6, address: "234 Howrah, Kolkata", price: 7000, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1582719200943-5f2b77e36c3d?auto=format&fit=crop&w=800&q=60" },
+            { id: 53, name: "Salt Lake Hostel", cityId: 6, address: "345 Salt Lake, Kolkata", price: 7500, amenities: ["WiFi", "AC", "Social Area"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1618221196123-7f8c064b2f29?auto=format&fit=crop&w=800&q=60" },
+            { id: 54, name: "Garia Residency", cityId: 6, address: "456 Garia, Kolkata", price: 6800, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1560347876-aeef00ee58a1?auto=format&fit=crop&w=800&q=60" },
+            { id: 55, name: "New Town Stay", cityId: 6, address: "567 New Town, Kolkata", price: 7900, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1598205023796-2e8c87f5a9fa?auto=format&fit=crop&w=800&q=60" },
+            { id: 56, name: "Dumdum Hostel", cityId: 6, address: "678 Dumdum, Kolkata", price: 7100, amenities: ["WiFi", "CCTV", "Laundry"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1562183241-b937e95585b2?auto=format&fit=crop&w=800&q=60" },
+            { id: 57, name: "Tollygunge Suites", cityId: 6, address: "789 Tollygunge, Kolkata", price: 7400, amenities: ["WiFi", "Breakfast", "Gym"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1618221273832-83d5cb7c8e32?auto=format&fit=crop&w=800&q=60" },
+            { id: 58, name: "Ballygunge Inn", cityId: 6, address: "890 Ballygunge, Kolkata", price: 8000, amenities: ["WiFi", "AC", "Laundry"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1578898887943-3e9ad5a13d5d?auto=format&fit=crop&w=800&q=60" },
+            { id: 59, name: "Behala Residency", cityId: 6, address: "901 Behala, Kolkata", price: 6900, amenities: ["WiFi", "Laundry", "CCTV"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1618221229590-3f2a4f2db784?auto=format&fit=crop&w=800&q=60" },
+            { id: 60, name: "College Street Hostel", cityId: 6, address: "1010 College Street, Kolkata", price: 7800, amenities: ["WiFi", "Breakfast", "AC"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1556742400-b5d0594b3c25?auto=format&fit=crop&w=800&q=60" },
+
+              { id: 61, name: "Koregaon Park Hostel", cityId: 7, address: "123 Koregaon Park, Pune", price: 8200, amenities: ["WiFi", "AC", "Laundry"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1623084456000-efc05d4953ea?auto=format&fit=crop&w=800&q=60" },
+              { id: 62, name: "Baner Comfort Stay", cityId: 7, address: "234 Baner Road, Pune", price: 8000, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1600585154035-6390b5d7c43b?auto=format&fit=crop&w=800&q=60" },
+              { id: 63, name: "Viman Nagar Residency", cityId: 7, address: "345 Viman Nagar, Pune", price: 7900, amenities: ["WiFi", "AC", "Social Area"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1578894380068-f93f87fce048?auto=format&fit=crop&w=800&q=60" },
+              { id: 64, name: "Kothrud Heights", cityId: 7, address: "456 Kothrud, Pune", price: 7700, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1592595896551-12c4d5c93ea6?auto=format&fit=crop&w=800&q=60" },
+              { id: 65, name: "Hinjewadi Hub", cityId: 7, address: "567 Hinjewadi, Pune", price: 8400, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1618221308472-b2433ed6f2d7?auto=format&fit=crop&w=800&q=60" },
+              { id: 66, name: "Aundh Suites", cityId: 7, address: "678 Aundh, Pune", price: 8100, amenities: ["WiFi", "CCTV", "Laundry"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=60" },
+              { id: 67, name: "Pimple Saudagar Inn", cityId: 7, address: "789 Pimple Saudagar, Pune", price: 7800, amenities: ["WiFi", "Breakfast", "Gym"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1560067174-d93105d6aee5?auto=format&fit=crop&w=800&q=60" },
+              { id: 68, name: "Magarpatta Residency", cityId: 7, address: "890 Magarpatta, Pune", price: 8500, amenities: ["WiFi", "AC", "Laundry"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1623084455535-ff24e7d3671a?auto=format&fit=crop&w=800&q=60" },
+              { id: 69, name: "Swargate Stay", cityId: 7, address: "901 Swargate, Pune", price: 7600, amenities: ["WiFi", "Laundry", "CCTV"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1618221273518-2aa1e7848158?auto=format&fit=crop&w=800&q=60" },
+              { id: 70, name: "Deccan Hostel", cityId: 7, address: "1010 Deccan, Pune", price: 8300, amenities: ["WiFi", "Breakfast", "AC"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1560448204-8aa5e4a60f38?auto=format&fit=crop&w=800&q=60" },
+
+                { id: 71, name: "Sardar Patel Hostel", cityId: 8, address: "123 Sardar Patel Road, Ahmedabad", price: 7000, amenities: ["WiFi", "AC", "Laundry"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1570763697228-91e3753de100?auto=format&fit=crop&w=800&q=60" },
+                { id: 72, name: "Gandhi Nagar Hostel", cityId: 8, address: "234 Gandhi Nagar, Ahmedabad", price: 7200, amenities: ["WiFi", "Breakfast", "Laundry"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1571345572132-b56d20a7a3fe?auto=format&fit=crop&w=800&q=60" },
+                { id: 73, name: "Old City Residency", cityId: 8, address: "345 Old City Road, Ahmedabad", price: 7500, amenities: ["WiFi", "AC", "Social Area"], rating: 4.5, imageUrl: "https://images.unsplash.com/photo-1592762604748-2a4a7e3f8245?auto=format&fit=crop&w=800&q=60" },
+                { id: 74, name: "Navrangpura Stay", cityId: 8, address: "456 Navrangpura, Ahmedabad", price: 7800, amenities: ["WiFi", "Laundry", "Private Rooms"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1601088892255-b0fe4c6989fe?auto=format&fit=crop&w=800&q=60" },
+                { id: 75, name: "Ellis Bridge Inn", cityId: 8, address: "567 Ellis Bridge, Ahmedabad", price: 8000, amenities: ["WiFi", "AC", "Breakfast"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1618221273518-2aa1e7848158?auto=format&fit=crop&w=800&q=60" },
+                { id: 76, name: "Vastrapur Hostel", cityId: 8, address: "678 Vastrapur, Ahmedabad", price: 8200, amenities: ["WiFi", "CCTV", "Laundry"], rating: 4.1, imageUrl: "https://images.unsplash.com/photo-1575883178747-c4133158a3a4?auto=format&fit=crop&w=800&q=60" },
+                { id: 77, name: "Maninagar Stay", cityId: 8, address: "789 Maninagar, Ahmedabad", price: 7600, amenities: ["WiFi", "Breakfast", "Gym"], rating: 4.0, imageUrl: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=60" },
+                { id: 78, name: "Prahlad Nagar Residency", cityId: 8, address: "890 Prahlad Nagar, Ahmedabad", price: 8300, amenities: ["WiFi", "AC", "Laundry"], rating: 4.4, imageUrl: "https://images.unsplash.com/photo-1618221308472-b2433ed6f2d7?auto=format&fit=crop&w=800&q=60" },
+                { id: 79, name: "Sarkhej Residency", cityId: 8, address: "901 Sarkhej, Ahmedabad", price: 7500, amenities: ["WiFi", "Laundry", "CCTV"], rating: 4.3, imageUrl: "https://images.unsplash.com/photo-1578894380068-f93f87fce048?auto=format&fit=crop&w=800&q=60" },
+                { id: 80, name: "CG Road Hostel", cityId: 8, address: "1010 CG Road, Ahmedabad", price: 7900, amenities: ["WiFi", "Breakfast", "AC"], rating: 4.2, imageUrl: "https://images.unsplash.com/photo-1618221273518-98bba15c4045?auto=format&fit=crop&w=800&q=60" }
+              
+            ]
+            
+        
+        
+      
+    
+  
+
+
 
 const MOCK_USER: UserProfile = {
   id: 1,

@@ -44,7 +44,7 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center space-x-4">
             <Link
-              to="/"
+              to="/Home"
               className="flex items-center text-gray-700 hover:text-hostel-blue transition"
             >
               <span>Home</span>
