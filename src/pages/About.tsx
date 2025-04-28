@@ -20,47 +20,91 @@ const About = () => {
             />
             
             <div className="p-6">
-              <h2 className="text-2xl font-semibold text-hostel-blue mb-4">Our Mission</h2>
-              <p className="text-gray-700 mb-4">
-                HostelConnect was founded in 2023 with a simple mission: to connect travelers with the best hostels around the world. We believe that travel should be accessible to everyone, and hostels provide an affordable and social way to explore new destinations.
-              </p>
-              
-              <h2 className="text-2xl font-semibold text-hostel-blue mb-4 mt-8">What We Offer</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Comprehensive Search</h3>
-                  <p className="text-gray-700">
-                    Find hostels by location, price, and amenities to match your travel needs.
-                  </p>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Verified Reviews</h3>
-                  <p className="text-gray-700">
-                    Read authentic reviews from fellow travelers to make informed decisions.
-                  </p>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Best Price Guarantee</h3>
-                  <p className="text-gray-700">
-                    We work directly with hostels to ensure you get the best possible rates.
-                  </p>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Community Connection</h3>
-                  <p className="text-gray-700">
-                    Connect with other travelers and find the perfect social environment.
-                  </p>
-                </div>
-              </div>
-              
-              <h2 className="text-2xl font-semibold text-hostel-blue mb-4 mt-8">Our Team</h2>
-              <p className="text-gray-700 mb-6">
-                Our team consists of passionate travelers who have stayed in hundreds of hostels across the globe. We understand what makes a great hostel experience and are committed to helping you find the perfect place to stay.
-              </p>
-            </div>
+  <h2 className="text-2xl font-semibold text-hostel-blue mb-4">Our Mission</h2>
+  <p className="text-gray-700 mb-4">
+    Welcome to Hostel Connect! We understand how important it is to find a safe, affordable, and convenient place to stay while you pursue your studies. Our platform is designed to help you find the best hostels near top-ranked universities across India, making your student life easier and more enjoyable.
+  </p>
+  
+  <h2 className="text-2xl font-semibold text-hostel-blue mb-4 mt-8">What We Offer</h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div className="bg-gray-50 p-4 rounded-lg">
+      <h3 className="font-semibold text-lg mb-2">Comprehensive Search</h3>
+      <p className="text-gray-700">
+        Find hostels by location, price, and amenities to match your travel needs.
+      </p>
+    </div>
+    
+    <div className="bg-gray-50 p-4 rounded-lg">
+      <h3 className="font-semibold text-lg mb-2">Verified Reviews</h3>
+      <p className="text-gray-700">
+        Read authentic reviews from fellow travelers to make informed decisions.
+      </p>
+    </div>
+    
+    <div className="bg-gray-50 p-4 rounded-lg">
+      <h3 className="font-semibold text-lg mb-2">Best Price Guarantee</h3>
+      <p className="text-gray-700">
+        We work directly with hostels to ensure you get the best possible rates.
+      </p>
+    </div>
+    
+    <div className="bg-gray-50 p-4 rounded-lg">
+      <h3 className="font-semibold text-lg mb-2">Community Connection</h3>
+      <p className="text-gray-700">
+        Connect with other travelers and find the perfect social environment.
+      </p>
+    </div>
+  </div>
+  
+  <h2 className="text-2xl font-semibold text-hostel-blue mb-4 mt-8">Our Team</h2>
+  <p className="text-gray-700 mb-6">
+    Team Behind Hostel Connect: We are a group of students passionate about improving the way you search for hostels. Our goal is to simplify your hostel search process and help you find a great place to stay while you're in college.
+  </p>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="bg-gray-50 p-4 rounded-lg">
+    <h3 className="font-semibold text-lg mb-2">
+      <a href="https://www.linkedin.com/in/ayush-kathayat-306218248/" target="_blank" rel="noopener noreferrer">Ayush Kathayat</a>
+    </h3>
+    <p className="text-gray-700">Role: Full Stack Developer</p>
+    <p className="text-gray-700">
+      <a href="https://www.linkedin.com/in/ayush-kathayat-306218248/" target="_blank" rel="noopener noreferrer" className="text-hostel-blue">LinkedIn</a>
+    </p>
+  </div>
+
+  <div className="bg-gray-50 p-4 rounded-lg">
+    <h3 className="font-semibold text-lg mb-2">
+      <a href="https://www.linkedin.com/in/rohit--kumar-/" target="_blank" rel="noopener noreferrer">Rohit Kumar</a>
+    </h3>
+    <p className="text-gray-700">Role: Backend Developer</p>
+    <p className="text-gray-700">
+      <a href="https://www.linkedin.com/in/rohit--kumar-/" target="_blank" rel="noopener noreferrer" className="text-hostel-blue">LinkedIn</a>
+    </p>
+  </div>
+
+  <div className="bg-gray-50 p-4 rounded-lg">
+    <h3 className="font-semibold text-lg mb-2">
+      <a href="https://www.linkedin.com/in/sutirthochakravorty/" target="_blank" rel="noopener noreferrer">Sutirtho Chakravorty</a>
+    </h3>
+    <p className="text-gray-700">Role: Frontend Developer</p>
+    <p className="text-gray-700">
+      <a href="https://www.linkedin.com/in/sutirthochakravorty/" target="_blank" rel="noopener noreferrer" className="text-hostel-blue">LinkedIn</a>
+    </p>
+  </div>
+
+  <div className="bg-gray-50 p-4 rounded-lg">
+    <h3 className="font-semibold text-lg mb-2">
+      <a href="https://www.linkedin.com/in/bala-shashi-51249b219/" target="_blank" rel="noopener noreferrer">Shashi Bala</a>
+    </h3>
+    <p className="text-gray-700">Role: Frontend Developer</p>
+    <p className="text-gray-700">
+      <a href="https://www.linkedin.com/in/bala-shashi-51249b219/" target="_blank" rel="noopener noreferrer" className="text-hostel-blue">LinkedIn</a>
+    </p>
+  </div>
+</div>
+
+</div>
+
           </div>
         </div>
       </div>
