@@ -54,6 +54,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { processImageUpload } from "@/utils/imageUpload";
+import HomePage from "./Home";
 
 const formSchema = z.object({
   name: z.string().min(3, { message: "Name must be at least 3 characters" }),
@@ -153,8 +154,9 @@ const PostHostel = () => {
 
       toast({
         title: "Images Uploaded",
-        description: `Successfully uploaded ${uploadedUrls.length} image${uploadedUrls.length > 1 ? "s" : ""
-          }`,
+        description: `Successfully uploaded ${uploadedUrls.length} image${
+          uploadedUrls.length > 1 ? "s" : ""
+        }`,
       });
     } catch (error) {
       console.error("Upload error:", error);
@@ -241,7 +243,7 @@ const PostHostel = () => {
           "Your hostel has been listed. It will be visible to students soon.",
       });
 
-      navigate("/home");
+      <HomePage userType="admin" hostelData={[data]} />;
     } catch (error) {
       console.error("Submit error:", error);
       toast({
@@ -661,7 +663,6 @@ const PostHostel = () => {
         <Footer />
       </div>
     </>
-
   );
 };
 

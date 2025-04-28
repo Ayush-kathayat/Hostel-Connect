@@ -99,6 +99,13 @@ const Index = () => {
             </Button>
             <Button
               size="lg"
+              onClick={() => {
+                if (isAuthenticated) {
+                  navigate("/Home");
+                } else {
+                  navigate("/auth");
+                }
+              }}
               className="bg-blue-800 text-white hover:bg-blue-900 font-semibold px-8 py-6 rounded-lg shadow-md transition-all hover:shadow-xl border border-blue-600"
             >
               <HomeIcon className="mr-3 h-5 w-5" /> Post Hostels

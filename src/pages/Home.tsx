@@ -476,7 +476,12 @@ const OwnerHome: React.FC<{ hostels: Hostel[] }> = ({ hostels }) => {
   );
 };
 
-const HomePage: React.FC = () => {
+interface homeProps {
+  userType: string;
+  hostelData: Hostel[];
+}
+
+const HomePage: React.FC<homeProps> = ({ userType, hostelData }) => {
   // In a real app, you would get this from authentication context
   const currentUser = MOCK_USER;
 
@@ -487,9 +492,9 @@ const HomePage: React.FC = () => {
         {currentUser.role === UserRole.STUDENT ||
         currentUser.userType === "student" ? (
           <StudentHome />
-        ) : (
-          <OwnerHome hostels={currentUser.hostels} />
-        )}
+        ) : userType === "admin" ? (
+          <OwnerHome hostels={hostelData} />
+        ) : null}
       </main>
       <div className="mt-auto">
         <Footer />
