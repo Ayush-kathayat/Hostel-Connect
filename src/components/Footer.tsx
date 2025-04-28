@@ -56,7 +56,7 @@ const Footer = () => {
               <p>Chandigarh University</p>
               <p>NH-05, Ludhiana</p>
               <p className="mt-2">Email: info@hostelconnect.com</p>
-              <p>Phone: +91 (555) 123-4567</p>
+              <p>Phone: +91 123-456-7890</p>
             </address>
           </div>
         </div>
