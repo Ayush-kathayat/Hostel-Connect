@@ -6,14 +6,14 @@ import Navbar from "@/components/Navbar";
 
 // Mock data
 const POPULAR_CITIES: City[] = [
-  { id: 1, name: "Mumbai", imageUrl: "/api/placeholder/300/200" },
-  { id: 2, name: "Delhi", imageUrl: "/api/placeholder/300/200" },
-  { id: 3, name: "Bangalore", imageUrl: "/api/placeholder/300/200" },
-  { id: 4, name: "Hyderabad", imageUrl: "/api/placeholder/300/200" },
-  { id: 5, name: "Chennai", imageUrl: "/api/placeholder/300/200" },
-  { id: 6, name: "Kolkata", imageUrl: "/api/placeholder/300/200" },
-  { id: 7, name: "Pune", imageUrl: "/api/placeholder/300/200" },
-  { id: 8, name: "Ahmedabad", imageUrl: "/api/placeholder/300/200" },
+  { id: 1, name: "Mumbai", imageUrl: "/public/City photos/Mumbai.jpeg" },
+  { id: 2, name: "Delhi", imageUrl: "/public/City photos/Delhi.webp" },
+  { id: 3, name: "Bangalore", imageUrl: "/public/City photos/Banglore.webp" },
+  { id: 4, name: "Hyderabad", imageUrl: "/public/City photos/hydrebad.jpeg" },
+  { id: 5, name: "Chennai", imageUrl: "/public/City photos/Chennai.jpeg" },
+  { id: 6, name: "Kolkata", imageUrl: "/public/City photos/Kolkata.png" },
+  { id: 7, name: "Pune", imageUrl: "/public/City photos/Pune'.jpeg" },
+  { id: 8, name: "Ahmedabad", imageUrl: "/public/City photos/ahmedabad.webp" },
 ];
 
 const UNIVERSITIES = [
