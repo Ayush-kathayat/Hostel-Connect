@@ -35,7 +35,6 @@ const Footer = () => {
               <li><Link to="/" className="text-gray-300 hover:text-white transition">Home</Link></li>
               <li><Link to="/about" className="text-gray-300 hover:text-white transition">About Us</Link></li>
               <li><Link to="/contact" className="text-gray-300 hover:text-white transition">Contact</Link></li>
-              <li><Link to="/faq" className="text-gray-300 hover:text-white transition">FAQ</Link></li>
             </ul>
           </div>
           
@@ -54,10 +53,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <address className="not-italic text-gray-300">
-              <p>1234 Traveler's Road</p>
-              <p>Backpacker City, BC 56789</p>
+              <p>Chandigarh University</p>
+              <p>NH-05, Ludhiana</p>
               <p className="mt-2">Email: info@hostelconnect.com</p>
-              <p>Phone: +1 (555) 123-4567</p>
+              <p>Phone: +91 (555) 123-4567</p>
             </address>
           </div>
         </div>
