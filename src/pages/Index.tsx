@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -11,8 +11,27 @@ import {
   HomeIcon,
   ArrowRight,
 } from "lucide-react";
+import GoogleMap from "@/components/GoogleMap";
+
+// City data with coordinates
+const cities = [
+  { city: "Mumbai", img: "/City photos/Mumbai.jpeg", lat: 19.0825, lng: 72.7141 },
+  { city: "Delhi", img: "/City photos/Delhi.webp", lat: 28.6443, lng: 76.7636 },
+  { city: "Bangalore", img: "/City photos/Banglore.webp", lat: 12.9716, lng: 77.5946 },
+  { city: "Chennai", img: "/City photos/Chennai.jpeg", lat: 13.0827, lng: 80.2707 },
+  { city: "Hyderabad", img: "/City photos/hydrebad.jpeg", lat: 17.3850, lng: 78.4867 },
+  { city: "Kolkata", img: "/City photos/Kolkata.png", lat: 22.5726, lng: 88.3639 },
+  { city: "Pune", img: "/City photos/Pune'.jpeg", lat: 18.5204, lng: 73.8567 },
+  { city: "Ahmedabad", img: "/City photos/ahmedabad.webp", lat: 23.0225, lng: 72.5714 },
+];
 
 const Index = () => {
+  const [selectedCity, setSelectedCity] = useState<{ lat: number; lng: number } | null>(null);
+
+  const handleCityClick = (lat: number, lng: number) => {
+    setSelectedCity({ lat, lng });
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
@@ -169,21 +188,13 @@ const Index = () => {
         <div className="w-24 h-1 bg-hostel-blue mx-auto mb-16 rounded-full"></div>
 
         <div className="flex flex-col gap-10">
-          {/* Your city grid */}
+          {/* City grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { city: "Mumbai", img: "/City photos/Mumbai.jpeg" },
-              { city: "Delhi", img: "/City photos/Delhi.webp" },
-              { city: "Bangalore", img: "/City photos/Banglore.webp" },
-              { city: "Chennai", img: "/City photos/Chennai.jpeg" },
-              { city: "Hyderabad", img: "/City photos/hydrebad.jpeg" },
-              { city: "Kolkata", img: "/City photos/Kolkata.png" },
-              { city: "Pune", img: "/City photos/Pune.jpeg" },
-              { city: "Ahmedabad", img: "/City photos/ahmedabad.webp" },
-            ].map(({ city, img }) => (
+            {cities.map(({ city, img, lat, lng }) => (
               <div
                 key={city}
-                className="bg-white rounded-xl overflow-hidden transition-all hover:shadow-xl border border-gray-200 hover:border-hostel-blue group"
+                className="bg-white rounded-xl overflow-hidden transition-all hover:shadow-xl border border-gray-200 hover:border-hostel-blue group cursor-pointer"
+                onClick={() => handleCityClick(lat, lng)}
               >
                 <div className="h-48 relative">
                   <img
@@ -208,11 +219,12 @@ const Index = () => {
             ))}
           </div>
 
-          {/* Map Div */}
-          <div id="map" className="w-full h-[500px] rounded-lg shadow-lg"></div>
+          {/* Map Component */}
+          {selectedCity && (
+            <GoogleMap lat={selectedCity.lat} lng={selectedCity.lng} />
+          )}
         </div>
       </div>
-
 
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-hostel-blue to-blue-700 py-20 shadow-lg">
