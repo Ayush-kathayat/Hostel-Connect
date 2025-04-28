@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import Footer from "@/components/Footer";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { toast } from "@/components/ui/use-toast";
 import {
@@ -152,9 +153,8 @@ const PostHostel = () => {
 
       toast({
         title: "Images Uploaded",
-        description: `Successfully uploaded ${uploadedUrls.length} image${
-          uploadedUrls.length > 1 ? "s" : ""
-        }`,
+        description: `Successfully uploaded ${uploadedUrls.length} image${uploadedUrls.length > 1 ? "s" : ""
+          }`,
       });
     } catch (error) {
       console.error("Upload error:", error);
@@ -657,7 +657,11 @@ const PostHostel = () => {
           </Card>
         </div>
       </div>
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </>
+
   );
 };
 

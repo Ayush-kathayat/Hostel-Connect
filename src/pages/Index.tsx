@@ -163,49 +163,55 @@ const Index = () => {
 
       {/* Popular Destinations */}
       <div className="container mx-auto px-6 py-20">
-  <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">
-    Popular Destinations
-  </h2>
-  <div className="w-24 h-1 bg-hostel-blue mx-auto mb-16 rounded-full"></div>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">
+          Popular Destinations
+        </h2>
+        <div className="w-24 h-1 bg-hostel-blue mx-auto mb-16 rounded-full"></div>
 
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-    {[
-      { city: "Mumbai", img: "/public/City photos/Mumbai.jpeg" },
-      { city: "Delhi", img: "/public/City photos/Delhi.webp" },
-      { city: "Bangalore", img: "/public/City photos/Banglore.webp" },
-      { city: "Chennai", img: "/public/City photos/Chennai.jpeg" },
-      { city: "Hyderabad", img: "/public/City photos/hydrebad.jpeg" },
-      { city: "Kolkata", img: "/public/City photos/Kolkata.png" },
-      { city: "Pune", img: "public/City photos/Pune'.jpeg" },
-      { city: "Ahmedabad", img: "/public/City photos/ahmedabad.webp" },
-    ].map(({ city, img }) => (
-      <div
-        key={city}
-        className="bg-white rounded-xl overflow-hidden transition-all hover:shadow-xl border border-gray-200 hover:border-hostel-blue group"
-      >
-        <div className="h-48 relative">
-          <img
-            src={img}
-            alt={city}
-            className="object-cover w-full h-full"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-5">
-            <h3 className="text-white font-semibold text-xl group-hover:text-hostel-lightBlue transition-colors">
-              {city}
-            </h3>
+        <div className="flex flex-col gap-10">
+          {/* Your city grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { city: "Mumbai", img: "/City photos/Mumbai.jpeg" },
+              { city: "Delhi", img: "/City photos/Delhi.webp" },
+              { city: "Bangalore", img: "/City photos/Banglore.webp" },
+              { city: "Chennai", img: "/City photos/Chennai.jpeg" },
+              { city: "Hyderabad", img: "/City photos/hydrebad.jpeg" },
+              { city: "Kolkata", img: "/City photos/Kolkata.png" },
+              { city: "Pune", img: "/City photos/Pune.jpeg" },
+              { city: "Ahmedabad", img: "/City photos/ahmedabad.webp" },
+            ].map(({ city, img }) => (
+              <div
+                key={city}
+                className="bg-white rounded-xl overflow-hidden transition-all hover:shadow-xl border border-gray-200 hover:border-hostel-blue group"
+              >
+                <div className="h-48 relative">
+                  <img
+                    src={img}
+                    alt={city}
+                    className="object-cover w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-5">
+                    <h3 className="text-white font-semibold text-xl group-hover:text-hostel-lightBlue transition-colors">
+                      {city}
+                    </h3>
+                  </div>
+                </div>
+                <div className="p-4 bg-white flex justify-between items-center">
+                  <span className="text-gray-600 text-sm">Find hostels</span>
+                  <ArrowRight
+                    size={16}
+                    className="text-hostel-blue opacity-0 group-hover:opacity-100 transition-opacity"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-        <div className="p-4 bg-white flex justify-between items-center">
-          <span className="text-gray-600 text-sm">Find hostels</span>
-          <ArrowRight
-            size={16}
-            className="text-hostel-blue opacity-0 group-hover:opacity-100 transition-opacity"
-          />
+
+          {/* Map Div */}
+          <div id="map" className="w-full h-[500px] rounded-lg shadow-lg"></div>
         </div>
       </div>
-    ))}
-  </div>
-</div>
 
 
       {/* CTA Section */}
