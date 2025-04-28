@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useAuthContext } from '@/contexts/AuthContext';
-import { toast } from '@/components/ui/use-toast';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuthContext } from "@/contexts/AuthContext";
+import { toast } from "@/components/ui/use-toast";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -26,33 +32,48 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import Navbar from '@/components/Navbar';
-import { 
-  Camera, 
-  MapPin, 
-  Building, 
-  Bed, 
-  IndianRupee, 
-  Upload, 
-  X, 
-  CloudUpload, 
-  Image 
-} from 'lucide-react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { processImageUpload } from '@/utils/imageUpload';
+import Navbar from "@/components/Navbar";
+import {
+  Camera,
+  MapPin,
+  Building,
+  Bed,
+  IndianRupee,
+  Upload,
+  X,
+  CloudUpload,
+  Image,
+} from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { processImageUpload } from "@/utils/imageUpload";
 
 const formSchema = z.object({
   name: z.string().min(3, { message: "Name must be at least 3 characters" }),
-  description: z.string().min(20, { message: "Description must be at least 20 characters" }),
-  address: z.string().min(5, { message: "Address must be at least 5 characters" }),
+  description: z
+    .string()
+    .min(20, { message: "Description must be at least 20 characters" }),
+  address: z
+    .string()
+    .min(5, { message: "Address must be at least 5 characters" }),
   city: z.string().min(2, { message: "City is required" }),
   state: z.string().min(2, { message: "State is required" }),
   pincode: z.string().min(6, { message: "Enter a valid pincode" }),
   nearbyUniversity: z.string().optional(),
   roomTypes: z.string().min(1, { message: "Room type is required" }),
-  pricePerMonth: z.coerce.number().min(500, { message: "Price must be at least ₹500" }),
+  pricePerMonth: z.coerce
+    .number()
+    .min(500, { message: "Price must be at least ₹500" }),
   amenities: z.string().min(3, { message: "Please list some amenities" }),
-  contactNumber: z.string().min(10, { message: "Enter a valid contact number" }),
+  contactNumber: z
+    .string()
+    .min(10, { message: "Enter a valid contact number" }),
   contactEmail: z.string().email({ message: "Enter a valid email" }),
 });
 
@@ -70,18 +91,18 @@ const PostHostel = () => {
   // Redirect if not authenticated or not a hostel provider
   React.useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/auth');
+      navigate("/auth");
       toast({
         title: "Authentication Required",
         description: "Please login to post a hostel listing",
-        variant: "destructive"
+        variant: "destructive",
       });
     } else if (user?.userType !== "hostelProvider") {
-      navigate('/');
+      navigate("/");
       toast({
         title: "Access Denied",
         description: "Only hostel providers can post listings",
-        variant: "destructive"
+        variant: "destructive",
       });
     }
   }, [isAuthenticated, user, navigate]);
@@ -104,47 +125,51 @@ const PostHostel = () => {
     },
   });
 
-  const handleLocalFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLocalFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const files = event.target.files;
-    
+
     if (!files || files.length === 0) return;
-    
+
     setIsUploading(true);
-    
+
     try {
       const uploadedUrls: string[] = [];
-      
+
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const result = await processImageUpload(file);
-        
+
         if (result.success) {
           uploadedUrls.push(result.url);
         } else {
           throw new Error(result.error);
         }
       }
-      
+
       setUploadedImages([...uploadedImages, ...uploadedUrls]);
-      
+
       toast({
         title: "Images Uploaded",
-        description: `Successfully uploaded ${uploadedUrls.length} image${uploadedUrls.length > 1 ? 's' : ''}`,
+        description: `Successfully uploaded ${uploadedUrls.length} image${
+          uploadedUrls.length > 1 ? "s" : ""
+        }`,
       });
     } catch (error) {
       console.error("Upload error:", error);
       toast({
         title: "Upload Failed",
         description: "Unable to upload one or more images",
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setIsUploading(false);
       setUploadDialogOpen(false);
-      
+
       // Reset the file input
       if (fileInputRef.current) {
-        fileInputRef.current.value = '';
+        fileInputRef.current.value = "";
       }
     }
   };
@@ -152,17 +177,17 @@ const PostHostel = () => {
   const handleGoogleDriveUpload = async () => {
     // Using the Google Picker API
     setIsUploading(true);
-    
+
     try {
       // For demo purposes - add placeholder images
       // In a real implementation, this would connect to Google Drive API
       const demoImageUrls = [
         `https://source.unsplash.com/random/800x600?hostel&sig=${Date.now()}`,
-        `https://source.unsplash.com/random/800x600?dorm&sig=${Date.now() + 1}`
+        `https://source.unsplash.com/random/800x600?dorm&sig=${Date.now() + 1}`,
       ];
-      
+
       setUploadedImages([...uploadedImages, ...demoImageUrls]);
-      
+
       toast({
         title: "Images Imported",
         description: "Successfully imported images from Google Drive",
@@ -172,7 +197,7 @@ const PostHostel = () => {
       toast({
         title: "Import Failed",
         description: "Unable to import images from Google Drive",
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setIsUploading(false);
@@ -184,7 +209,7 @@ const PostHostel = () => {
     const newImages = [...uploadedImages];
     newImages.splice(index, 1);
     setUploadedImages(newImages);
-    
+
     toast({
       title: "Image Removed",
       description: "The image has been removed",
@@ -196,32 +221,33 @@ const PostHostel = () => {
       toast({
         title: "Images Required",
         description: "Please upload at least one image of your hostel",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // In a real app, this would send data to a backend
       console.log("Form submitted:", { ...data, images: uploadedImages });
-      
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       toast({
         title: "Hostel Listed Successfully",
-        description: "Your hostel has been listed. It will be visible to students soon.",
+        description:
+          "Your hostel has been listed. It will be visible to students soon.",
       });
-      
-      navigate('/');
+
+      navigate("/home");
     } catch (error) {
       console.error("Submit error:", error);
       toast({
         title: "Submission Failed",
         description: "Unable to list your hostel. Please try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
@@ -238,25 +264,30 @@ const PostHostel = () => {
       <Navbar />
       <div className="container mx-auto py-8 px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8 text-hostel-blue">List Your Hostel</h1>
-          
+          <h1 className="text-3xl font-bold text-center mb-8 text-hostel-blue">
+            List Your Hostel
+          </h1>
+
           <Card>
             <CardHeader>
               <CardTitle>Hostel Details</CardTitle>
               <CardDescription>
-                Provide detailed information about your hostel to attract more students
+                Provide detailed information about your hostel to attract more
+                students
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
                   <div className="space-y-4">
                     <h3 className="text-lg font-medium flex items-center">
                       <Building className="mr-2 text-hostel-blue" size={20} />
                       Basic Information
                     </h3>
-                    
+
                     <FormField
                       control={form.control}
                       name="name"
@@ -264,13 +295,16 @@ const PostHostel = () => {
                         <FormItem>
                           <FormLabel>Hostel Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="e.g. Sunrise Student Hostel" {...field} />
+                            <Input
+                              placeholder="e.g. Sunrise Student Hostel"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="description"
@@ -278,10 +312,10 @@ const PostHostel = () => {
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
-                            <Textarea 
-                              placeholder="Describe your hostel, its environment, and special features..." 
-                              className="min-h-24" 
-                              {...field} 
+                            <Textarea
+                              placeholder="Describe your hostel, its environment, and special features..."
+                              className="min-h-24"
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />
@@ -289,15 +323,15 @@ const PostHostel = () => {
                       )}
                     />
                   </div>
-                  
+
                   <Separator />
-                  
+
                   <div className="space-y-4">
                     <h3 className="text-lg font-medium flex items-center">
                       <MapPin className="mr-2 text-hostel-blue" size={20} />
                       Location
                     </h3>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -312,7 +346,7 @@ const PostHostel = () => {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="city"
@@ -327,7 +361,7 @@ const PostHostel = () => {
                         )}
                       />
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -342,7 +376,7 @@ const PostHostel = () => {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="pincode"
@@ -357,57 +391,74 @@ const PostHostel = () => {
                         )}
                       />
                     </div>
-                    
+
                     <FormField
                       control={form.control}
                       name="nearbyUniversity"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Nearby University/College (Optional)</FormLabel>
+                          <FormLabel>
+                            Nearby University/College (Optional)
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="e.g. Delhi University" {...field} />
+                            <Input
+                              placeholder="e.g. Delhi University"
+                              {...field}
+                            />
                           </FormControl>
                           <FormDescription>
-                            Mentioning nearby educational institutions helps students find your listing
+                            Mentioning nearby educational institutions helps
+                            students find your listing
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-                  
+
                   <Separator />
-                  
+
                   <div className="space-y-4">
                     <h3 className="text-lg font-medium flex items-center">
                       <Bed className="mr-2 text-hostel-blue" size={20} />
                       Room & Pricing Details
                     </h3>
-                    
+
                     <FormField
                       control={form.control}
                       name="roomTypes"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Room Types</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select room types available" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="single">Single Occupancy</SelectItem>
-                              <SelectItem value="double">Double Sharing</SelectItem>
-                              <SelectItem value="triple">Triple Sharing</SelectItem>
-                              <SelectItem value="multiple">Multiple Options Available</SelectItem>
+                              <SelectItem value="single">
+                                Single Occupancy
+                              </SelectItem>
+                              <SelectItem value="double">
+                                Double Sharing
+                              </SelectItem>
+                              <SelectItem value="triple">
+                                Triple Sharing
+                              </SelectItem>
+                              <SelectItem value="multiple">
+                                Multiple Options Available
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="pricePerMonth"
@@ -416,12 +467,15 @@ const PostHostel = () => {
                           <FormLabel>Price per Month (₹)</FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-                              <Input 
-                                type="number" 
-                                placeholder="e.g. 5000" 
+                              <IndianRupee
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                size={16}
+                              />
+                              <Input
+                                type="number"
+                                placeholder="e.g. 5000"
                                 className="pl-10"
-                                {...field} 
+                                {...field}
                               />
                             </div>
                           </FormControl>
@@ -432,7 +486,7 @@ const PostHostel = () => {
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="amenities"
@@ -440,10 +494,10 @@ const PostHostel = () => {
                         <FormItem>
                           <FormLabel>Amenities</FormLabel>
                           <FormControl>
-                            <Textarea 
-                              placeholder="e.g. WiFi, Laundry, Mess, Hot Water, Study Room, etc." 
-                              className="min-h-20" 
-                              {...field} 
+                            <Textarea
+                              placeholder="e.g. WiFi, Laundry, Mess, Hot Water, Study Room, etc."
+                              className="min-h-20"
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />
@@ -451,24 +505,27 @@ const PostHostel = () => {
                       )}
                     />
                   </div>
-                  
+
                   <Separator />
-                  
+
                   <div className="space-y-4">
                     <h3 className="text-lg font-medium flex items-center">
                       <Camera className="mr-2 text-hostel-blue" size={20} />
                       Photos
                     </h3>
-                    
+
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
                       <div className="flex flex-col items-center mb-4 space-y-3">
                         <p className="text-sm text-gray-500 text-center mb-2">
                           Upload photos of your hostel to attract more students
                         </p>
-                        
-                        <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+
+                        <Dialog
+                          open={uploadDialogOpen}
+                          onOpenChange={setUploadDialogOpen}
+                        >
                           <DialogTrigger asChild>
-                            <Button 
+                            <Button
                               type="button"
                               variant="outline"
                               className="w-full max-w-xs"
@@ -481,7 +538,8 @@ const PostHostel = () => {
                             <DialogHeader>
                               <DialogTitle>Upload Images</DialogTitle>
                               <DialogDescription>
-                                Choose how you want to upload images of your hostel
+                                Choose how you want to upload images of your
+                                hostel
                               </DialogDescription>
                             </DialogHeader>
                             <div className="grid grid-cols-1 gap-4 py-4">
@@ -493,9 +551,9 @@ const PostHostel = () => {
                                 ref={fileInputRef}
                                 onChange={handleLocalFileUpload}
                               />
-                              
-                              <Button 
-                                onClick={() => fileInputRef.current?.click()} 
+
+                              <Button
+                                onClick={() => fileInputRef.current?.click()}
                                 variant="outline"
                                 className="flex items-center justify-center gap-2"
                                 disabled={isUploading}
@@ -503,9 +561,9 @@ const PostHostel = () => {
                                 <Image className="h-5 w-5" />
                                 Upload from your device
                               </Button>
-                              
-                              <Button 
-                                onClick={handleGoogleDriveUpload} 
+
+                              <Button
+                                onClick={handleGoogleDriveUpload}
                                 variant="outline"
                                 className="flex items-center justify-center gap-2"
                                 disabled={isUploading}
@@ -513,24 +571,26 @@ const PostHostel = () => {
                                 <CloudUpload className="h-5 w-5" />
                                 Import from Google Drive
                               </Button>
-                              
+
                               {isUploading && (
                                 <div className="text-center">
-                                  <p className="text-sm text-gray-500">Uploading...</p>
+                                  <p className="text-sm text-gray-500">
+                                    Uploading...
+                                  </p>
                                 </div>
                               )}
                             </div>
                           </DialogContent>
                         </Dialog>
                       </div>
-                      
+
                       {uploadedImages.length > 0 && (
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
                           {uploadedImages.map((image, index) => (
                             <div key={index} className="relative group">
-                              <img 
-                                src={image} 
-                                alt={`Hostel image ${index + 1}`} 
+                              <img
+                                src={image}
+                                alt={`Hostel image ${index + 1}`}
                                 className="h-24 w-full object-cover rounded-md"
                               />
                               <button
@@ -547,12 +607,12 @@ const PostHostel = () => {
                       )}
                     </div>
                   </div>
-                  
+
                   <Separator />
-                  
+
                   <div className="space-y-4">
                     <h3 className="text-lg font-medium">Contact Information</h3>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -567,7 +627,7 @@ const PostHostel = () => {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="contactEmail"
@@ -583,9 +643,9 @@ const PostHostel = () => {
                       />
                     </div>
                   </div>
-                  
-                  <Button 
-                    type="submit" 
+
+                  <Button
+                    type="submit"
                     className="w-full bg-hostel-blue hover:bg-hostel-lightBlue"
                     disabled={isSubmitting}
                   >

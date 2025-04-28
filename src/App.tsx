@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +12,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/AuthPage";
 import PostHostel from "./pages/PostHostel";
+import HomePage from "./pages/Home";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +29,8 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<AuthPage />} />
-            <Route path="/post-hostel" element={<PostHostel />} />
+            <Route path="/post-hostels" element={<PostHostel />} />
+            <Route path="/home" element={<HomePage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

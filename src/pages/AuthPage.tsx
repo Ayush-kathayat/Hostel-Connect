@@ -1,60 +1,75 @@
-
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import LoginForm from '@/components/auth/LoginForm';
-import SignupForm from '@/components/auth/SignupForm';
-import { toast } from '@/components/ui/use-toast';
-import { useAuthContext } from '@/contexts/AuthContext';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import LoginForm from "@/components/auth/LoginForm";
+import SignupForm from "@/components/auth/SignupForm";
+import { toast } from "@/components/ui/use-toast";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const AuthPage = () => {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   const navigate = useNavigate();
   const { login, signup } = useAuthContext();
 
-  const handleLogin = async (email: string, password: string, userType: "student" | "hostelProvider") => {
+  const handleLogin = async (
+    email: string,
+    password: string,
+    userType: "student" | "hostelProvider"
+  ) => {
     const success = await login(email, password, userType);
     if (success) {
       toast({
         title: "Login Successful",
         description: "You have successfully logged in",
       });
-      
+
       // Redirect based on user type
       if (userType === "hostelProvider") {
-        navigate('/post-hostel');
+        navigate("/post-hostels");
       } else {
-        navigate('/');
+        navigate("/home");
       }
     } else {
       toast({
         title: "Login Failed",
         description: "Invalid credentials. Please try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
     }
   };
 
-  const handleSignup = async (name: string, email: string, password: string, userType: "student" | "hostelProvider") => {
+  const handleSignup = async (
+    name: string,
+    email: string,
+    password: string,
+    userType: "student" | "hostelProvider"
+  ) => {
     const success = await signup(name, email, password, userType);
     if (success) {
       toast({
         title: "Account Created Successfully",
         description: "Your account has been created and you are now logged in",
       });
-      
+
       // Redirect based on user type
       if (userType === "hostelProvider") {
-        navigate('/post-hostel');
+        navigate("/post-hostels");
       } else {
-        navigate('/');
+        navigate("/home");
       }
     } else {
       toast({
         title: "Signup Failed",
         description: "Unable to create account. Please try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
     }
   };
