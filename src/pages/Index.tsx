@@ -179,7 +179,6 @@ const Index = () => {
             "Pune",
             "Ahmedabad",
           ].map((city) => (
-            <a href={`/search?city=${city}`} key={city} className="group">
               <div className="bg-white rounded-xl overflow-hidden transition-all hover:shadow-xl border border-gray-200 hover:border-hostel-blue">
                 <div className="h-48 bg-gray-300 relative">
                   {/* This would be an image in production */}
@@ -197,7 +196,6 @@ const Index = () => {
                   />
                 </div>
               </div>
-            </a>
           ))}
         </div>
       </div>
