@@ -54,7 +54,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { processImageUpload } from "@/utils/imageUpload";
-import HomePage from "./Home";
+import axios from "axios"; // Add axios import
 
 const formSchema = z.object({
   name: z.string().min(3, { message: "Name must be at least 3 characters" }),
@@ -219,6 +219,7 @@ const PostHostel = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
+    // Check if images are uploaded
     if (uploadedImages.length === 0) {
       toast({
         title: "Images Required",
@@ -227,31 +228,42 @@ const PostHostel = () => {
       });
       return;
     }
-
+  
+    // Set submitting state to disable the submit button
     setIsSubmitting(true);
-
+  
     try {
-      // In a real app, this would send data to a backend
-      console.log("Form submitted:", { ...data, images: uploadedImages });
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
+      // Prepare data to send to the backend
+      const hostelData = {
+        ...data, // Spread form data (name, description, address, etc.)
+        images: uploadedImages, // Array of image URLs
+        userId: user?.id || user?.uid, // User ID from auth context
+      };
+  
+      // Send data to the backend via POST request
+      const response = await axios.post("http://localhost:5000/api/hostels", hostelData);
+  
+      // Show success toast
       toast({
         title: "Hostel Listed Successfully",
-        description:
-          "Your hostel has been listed. It will be visible to students soon.",
+        description: response.data.message,
       });
-
-      <HomePage userType="admin" hostelData={[data]} />;
+  
+      // Reset form and images
+      form.reset();
+      setUploadedImages([]);
+      navigate("/"); // Redirect to homepage
     } catch (error) {
+      // Log and display error
       console.error("Submit error:", error);
+      const errorMessage = error.response?.data?.message || "Unable to list your hostel. Please try again.";
       toast({
         title: "Submission Failed",
-        description: "Unable to list your hostel. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
+      // Reset submitting state
       setIsSubmitting(false);
     }
   };

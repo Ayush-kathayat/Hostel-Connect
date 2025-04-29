@@ -1,16 +1,7 @@
-export interface University {
-  id: number;
-  name: string;
-  location: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  rank?: number; // NIRF Ranking (optional but not displayed)
-}
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-// Top Indian universities from NIRF 2024 rankings with approximate coordinates
-export const universities: University[] = [
+const universities = [
   {
     id: 1,
     name: "Indian Institute of Science",
@@ -195,105 +186,40 @@ export const universities: University[] = [
   }
 ];
 
-// Function to search universities by name
-export const searchUniversities = (query: string): University[] => {
-  if (!query.trim()) return universities.slice(0, 20); // Return first 20 universities when no query
-  
-  const lowercaseQuery = query.toLowerCase();
-  return universities.filter(university => 
-    university.name.toLowerCase().includes(lowercaseQuery) ||
-    university.location.toLowerCase().includes(lowercaseQuery)
-  ).slice(0, 30); // Return up to 30 matching results
-};
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(async () => {
+    console.log("Connected to MongoDB");
 
-// Calculate distance between two coordinates using the Haversine formula (in km)
-export const calculateDistance = (
-  lat1: number, 
-  lng1: number, 
-  lat2: number, 
-  lng2: number
-): number => {
-  const R = 6371; // Radius of the Earth in km
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLng = (lng2 - lng1) * (Math.PI / 180);
-  const a = 
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
-    Math.sin(dLng / 2) * Math.sin(dLng / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c;
-  return distance;
-};
-
-// Get hostels near a university within a specific radius (in km)
-export const getHostelsNearUniversity = (
-  universityId: number,
-  hostels: any[],
-  radiusKm: number = 10
-): any[] => {
-  const university = universities.find(u => u.id === universityId);
-  if (!university) return [];
-
-  return hostels.filter(hostel => {
-    // Extract coordinates from hostel location string (assumed format: "lat,lng")
-    // In a real app, hostels would have proper coordinate data
-    const hostelCoords = extractCoordinates(hostel.location);
-    
-    if (!hostelCoords) return false;
-    
-    const distance = calculateDistance(
-      university.coordinates.lat,
-      university.coordinates.lng,
-      hostelCoords.lat,
-      hostelCoords.lng
+    // Clear existing universities
+    const University = mongoose.model(
+      "University",
+      new mongoose.Schema({
+        id: { type: Number, required: true, unique: true },
+        name: { type: String, required: true },
+        location: { type: String, required: true },
+        coordinates: {
+          lat: { type: Number, required: true },
+          lng: { type: Number, required: true },
+        },
+        rank: { type: Number },
+      })
     );
-    
-    // Update the hostel object with the calculated distance
-    hostel.distance = `${distance.toFixed(1)} km`;
-    
-    return distance <= radiusKm;
-  });
-};
 
-// Helper function to extract coordinates from location strings
-const extractCoordinates = (locationString: string): { lat: number, lng: number } | null => {
-  // Check if it's already a coordinate string (e.g., from geolocation)
-  if (locationString.includes(',')) {
-    const [lat, lng] = locationString.split(',').map(Number);
-    if (!isNaN(lat) && !isNaN(lng)) {
-      return { lat, lng };
-    }
-  }
-  
-  // For demo purposes, generate random coordinates near the city
-  // In a real app, you would use a geocoding service to get actual coordinates
-  const cities: { [key: string]: { lat: number, lng: number } } = {
-    'Delhi': { lat: 28.6139, lng: 77.2090 },
-    'Mumbai': { lat: 19.0760, lng: 72.8777 },
-    'Bangalore': { lat: 12.9716, lng: 77.5946 },
-    'Chennai': { lat: 13.0827, lng: 80.2707 },
-    'Kolkata': { lat: 22.5726, lng: 88.3639 },
-    'Hyderabad': { lat: 17.3850, lng: 78.4867 },
-    'Jaipur': { lat: 26.9124, lng: 75.7873 },
-    'Varanasi': { lat: 25.3176, lng: 82.9739 },
-    'Goa': { lat: 15.2993, lng: 74.1240 },
-    'Shimla': { lat: 31.1048, lng: 77.1734 }
-  };
-  
-  // Extract city name from the location string
-  const cityMatch = locationString.match(/^([^,]+)/);
-  const city = cityMatch ? cityMatch[0] : '';
-  
-  if (cities[city]) {
-    // Add a small random offset (within 5km) to make points different
-    const latOffset = (Math.random() - 0.5) * 0.05;
-    const lngOffset = (Math.random() - 0.5) * 0.05;
-    
-    return {
-      lat: cities[city].lat + latOffset,
-      lng: cities[city].lng + lngOffset
-    };
-  }
-  
-  return null;
-};
+    await University.deleteMany({});
+    console.log("Cleared existing universities");
+
+    // Insert new universities
+    await University.insertMany(universities);
+    console.log("Inserted universities");
+
+    mongoose.connection.close();
+    console.log("Disconnected from MongoDB");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
+  });

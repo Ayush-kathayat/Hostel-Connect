@@ -1,22 +1,24 @@
-import { universities } from "@/data/universities";
+import { searchUniversities, University } from "@/data/universities";
 import Footer from "@/components/Footer";
-import type React from "react";
-import { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { UserRole, type City, type Hostel, type UserProfile } from "./types";
-import { Building, MapPin, IndianRupee, Camera, ArrowRight } from "lucide-react";
+import { Building, MapPin, IndianRupee, Camera } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { MOCK_HOSTELS } from "@/data/hostels";
 import GoogleMap from "@/components/GoogleMap";
+import { toast } from "@/components/ui/use-toast";
+import { debounce } from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const POPULAR_CITIES: City[] = [
   { id: 1, name: "Mumbai", imageUrl: "/City photos/Mumbai.jpeg", coordinates: { lat: 19.0760, lng: 72.8777 } },
   { id: 2, name: "Delhi", imageUrl: "/City photos/Delhi.webp", coordinates: { lat: 28.7041, lng: 77.1025 } },
-  { id: 3, name: "Bangalore", imageUrl: "public/City photos/Banglore.webp", coordinates: { lat: 12.9716, lng: 77.5946 } },
-  { id: 4, name: "Hyderabad", imageUrl: "public/City photos/hydrebad.jpeg", coordinates: { lat: 17.3850, lng: 78.4867 } },
+  { id: 3, name: "Bangalore", imageUrl: "/City photos/Banglore.webp", coordinates: { lat: 12.9716, lng: 77.5946 } },
+  { id: 4, name: "Hyderabad", imageUrl: "/City photos/hydrebad.jpeg", coordinates: { lat: 17.3850, lng: 78.4867 } },
   { id: 5, name: "Chennai", imageUrl: "/City photos/Chennai.jpeg", coordinates: { lat: 13.0827, lng: 80.2707 } },
   { id: 6, name: "Kolkata", imageUrl: "/City photos/Kolkata.png", coordinates: { lat: 22.5726, lng: 88.3639 } },
-  { id: 7, name: "Pune", imageUrl: "public/City photos/Pune'.jpeg", coordinates: { lat: 18.5204, lng: 73.8567 } },
-  { id: 8, name: "Ahmedabad", imageUrl: "public/City photos/ahmedabad.webp", coordinates: { lat: 23.0225, lng: 72.5714 } },
+  { id: 7, name: "Pune", imageUrl: "/City photos/Pune'.jpeg", coordinates: { lat: 18.5204, lng: 73.8567 } },
+  { id: 8, name: "Ahmedabad", imageUrl: "/City photos/ahmedabad.webp", coordinates: { lat: 23.0225, lng: 72.5714 } },
 ];
 
 const MOCK_USER: UserProfile = {
@@ -50,18 +52,94 @@ const MOCK_USER: UserProfile = {
         "/api/placeholder/400/300",
       ],
       status: "Active",
+      coordinates: { lat: 28.7045, lng: 77.1020 }, // Added for demo
     },
   ],
 };
 
 const StudentHome: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState<number | null>(null);
-  const [selectedUniversity, setSelectedUniversity] = useState<number | null>(null);
+  const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null);
   const [selectedCityCoords, setSelectedCityCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [selectedUniversityCoords, setSelectedUniversityCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [selectedPopularCityCoords, setSelectedPopularCityCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [hostelsToShow, setHostelsToShow] = useState<Hostel[]>([]);
   const [activeTab, setActiveTab] = useState<"cities" | "universities">("cities");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [universities, setUniversities] = useState<University[]>([]);
+  const [filteredUniversities, setFilteredUniversities] = useState<University[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [searchLoading, setSearchLoading] = useState<boolean>(false);
+
+  // Fetch universities on mount
+  useEffect(() => {
+    const loadUniversities = async () => {
+      setLoading(true);
+      try {
+        const data = await searchUniversities("");
+        console.log("Initial universities loaded:", data);
+        if (data.length > 0) {
+          setUniversities(data);
+          setFilteredUniversities(data.slice(0, 12));
+        } else {
+          toast({
+            title: "Error",
+            description: "No universities found in the database.",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error("Error loading universities:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load universities. Please try again.",
+          variant: "destructive",
+        });
+      }
+      setLoading(false);
+    };
+    loadUniversities();
+  }, []);
+
+  // Debounced search handler
+  const handleSearch = useCallback(
+    debounce(async (query: string) => {
+      setSearchLoading(true);
+      try {
+        console.log("Searching for:", query);
+        const results = await searchUniversities(query);
+        console.log("Search results:", results);
+        setFilteredUniversities(results.slice(0, 12));
+        setUniversities((prev) => {
+          const newUniversities = [...prev, ...results.filter((r) => !prev.some((p) => p.name === r.name))];
+          console.log("Updated universities state:", newUniversities);
+          return newUniversities;
+        });
+        if (results.length === 0 && query) {
+          toast({
+            title: "No Results",
+            description: `No universities found for "${query}". Try a different search term.`,
+            variant: "default",
+          });
+        }
+      } catch (error) {
+        console.error("Search error:", error);
+        toast({
+          title: "Error",
+          description: "Failed to search universities. Please try again.",
+          variant: "destructive",
+        });
+      }
+      setSearchLoading(false);
+    }, 500),
+    []
+  );
+
+  // Update search query and trigger search
+  useEffect(() => {
+    handleSearch(searchQuery);
+  }, [searchQuery, handleSearch]);
 
   const handleCitySelect = (cityId: number) => {
     setSelectedCity(cityId);
@@ -78,19 +156,30 @@ const StudentHome: React.FC = () => {
     setHostelsToShow(filteredHostels);
   };
 
-  const handleUniversitySelect = (universityId: number) => {
-    setSelectedUniversity(universityId);
+  const handleUniversitySelect = (universityName: string) => {
+    setSelectedUniversity(universityName);
     setSelectedCity(null);
     setSelectedCityCoords(null);
     setSelectedPopularCityCoords(null);
-    const university = universities.find((uni) => uni.id === universityId);
+    console.log("Selecting university:", universityName);
+    const university = filteredUniversities.find((uni) => uni.name === universityName);
+    console.log("Found university in filteredUniversities:", university);
     if (university && university.coordinates) {
+      console.log("Setting university coords:", university.coordinates);
       setSelectedUniversityCoords(university.coordinates);
+    } else {
+      console.warn("No coordinates found for university:", universityName);
+      setSelectedUniversityCoords(null);
+      toast({
+        title: "Error",
+        description: "No coordinates available for this university.",
+        variant: "destructive",
+      });
     }
     setActiveTab("universities");
 
-    const cityName = university?.location.split(",")[0].trim();
-    const cityId = POPULAR_CITIES.find((city) => city.name === cityName)?.id;
+    const stateName = university?.state;
+    const cityId = POPULAR_CITIES.find((city) => city.name === stateName || city.name.includes(stateName))?.id;
     const filteredHostels = cityId ? MOCK_HOSTELS.filter((hostel) => hostel.cityId === cityId) : MOCK_HOSTELS.slice(0, 5);
     setHostelsToShow(filteredHostels);
   };
@@ -110,7 +199,15 @@ const StudentHome: React.FC = () => {
     setSelectedPopularCityCoords(null);
     setHostelsToShow([]);
     setActiveTab("cities");
+    setSearchQuery("");
   };
+
+  const handleViewDetails = (hostel: Hostel) => {
+    const university = filteredUniversities.find((uni) => uni.name === selectedUniversity);
+    navigate(`/hostel/${hostel.id}`, { state: { hostel, university } });
+  };
+
+  if (loading) return <div>Loading universities...</div>;
 
   return (
     <div className="container mx-auto p-4">
@@ -149,28 +246,45 @@ const StudentHome: React.FC = () => {
                   {/* Search by Universities Section */}
                   <div>
                     <h3 className="text-xl font-semibold mb-4 text-blue-700">Search by Universities</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {universities.map((university) => (
-                        <div
-                          key={university.id}
-                          className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow"
-                          onClick={() => handleUniversitySelect(university.id)}
-                        >
-                          <div className="p-4">
-                            <h3 className="font-bold text-lg">{university.name}</h3>
-                          </div>
-                        </div>
-                      ))}
+                    <div className="mb-4">
+                      <input
+                        type="text"
+                        placeholder="Search universities by name..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full p-2 rounded-lg shadow-md bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
                     </div>
+                    {searchLoading ? (
+                      <div className="text-center">Loading results...</div>
+                    ) : filteredUniversities.length > 0 ? (
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {filteredUniversities.map((university) => (
+                          <div
+                            key={university.name}
+                            className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+                            onClick={() => handleUniversitySelect(university.name)}
+                          >
+                            <div className="p-4">
+                              <h3 className="font-bold text-lg">{university.name}</h3>
+                              <p className="text-gray-600 text-sm">{university.state}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center text-gray-600">
+                        No universities found. Try a different search term.
+                      </div>
+                    )}
                   </div>
-
                 </>
               ) : (
                 <div className="text-center py-4">
                   <p className="text-lg text-blue-700">
                     {activeTab === "cities" && selectedCity
                       ? `Showing hostels in ${POPULAR_CITIES.find((city) => city.id === selectedCity)?.name}`
-                      : `Showing hostels near ${universities.find((uni) => uni.id === selectedUniversity)?.name}`}
+                      : `Showing hostels near ${selectedUniversity}`}
                   </p>
                   {/* Map for selected city */}
                   {selectedCityCoords && (
@@ -190,8 +304,13 @@ const StudentHome: React.FC = () => {
                         lat={selectedUniversityCoords.lat}
                         lng={selectedUniversityCoords.lng}
                         zoom={15}
-                        name={universities.find((uni) => uni.id === selectedUniversity)?.name}
+                        name={selectedUniversity}
                       />
+                    </div>
+                  )}
+                  {!selectedCityCoords && !selectedUniversityCoords && (
+                    <div className="mt-6 text-red-500">
+                      No coordinates available to display the map.
                     </div>
                   )}
                 </div>
@@ -208,7 +327,7 @@ const StudentHome: React.FC = () => {
               {activeTab === "cities" && selectedCity
                 ? `Hostels in ${POPULAR_CITIES.find((city) => city.id === selectedCity)?.name}`
                 : activeTab === "universities" && selectedUniversity
-                ? `Hostels near ${universities.find((uni) => uni.id === selectedUniversity)?.name}`
+                ? `Hostels near ${selectedUniversity}`
                 : "Matching Hostels"}
             </h2>
             <button
@@ -255,7 +374,10 @@ const StudentHome: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded w-full hover:bg-blue-600">
+                  <button
+                    className="mt-4 bg-blue-500 text-white py-2 px-4 rounded w-full hover:bg-blue-600"
+                    onClick={() => handleViewDetails(hostel)}
+                  >
                     View Details
                   </button>
                 </div>
