@@ -241,7 +241,7 @@ const PostHostel = () => {
       };
   
       // Send data to the backend via POST request
-      const response = await axios.post("http://localhost:5000/api/hostels", hostelData);
+      const response = await axios.post("https://hostel-connect-backend.onrender.com/api/hostels", hostelData);
   
       // Show success toast
       toast({

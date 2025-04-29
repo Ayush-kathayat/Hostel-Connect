@@ -12,7 +12,7 @@ export interface University {
 // Fetch universities from the backend
 export const fetchUniversities = async (): Promise<University[]> => {
   try {
-    const response = await axios.get("http://localhost:5000/api/universities");
+    const response = await axios.get("https://hostel-connect-backend.onrender.com/api/universities");
     console.log("Fetched universities:", response.data.length);
     return response.data;
   } catch (error) {
@@ -26,7 +26,7 @@ export const searchUniversities = async (query: string): Promise<University[]> =
   try {
     const trimmedQuery = query.trim();
     const response = await axios.get(
-      `http://localhost:5000/api/universities/search?q=${encodeURIComponent(trimmedQuery)}`
+      `https://hostel-connect-backend.onrender.com/api/universities/search?q=${encodeURIComponent(trimmedQuery)}`
     );
     console.log(`Search query: "${trimmedQuery}", Found: ${response.data.length} universities`);
     return response.data;

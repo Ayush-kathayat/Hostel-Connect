@@ -31,7 +31,7 @@ const Contact = () => {
     
     try {
       // Send form data to the backend
-      const response = await axios.post('http://localhost:5000/api/contacts', formData);
+      const response = await axios.post('https://hostel-connect-backend.onrender.com/api/contacts', formData);
       
       toast.success('Message sent successfully! We\'ll get back to you soon.');
       setFormData({
